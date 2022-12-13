@@ -41,6 +41,17 @@ public class FirstProblem {
 
         return accumulator;
     }
+    public static Elf solve(Stream<String> lines){
+        return lines.reduce(
+                        initial(),
+                        FirstProblem::splitByEmptyLIne,
+                        (first, second) -> new ArrayList<>() // ignore because it's a merge function that'll never happen
+                )
+                .stream()
+                .map(FirstProblem::buildElfFromResource)
+                .max(comparingInt(Elf::calories))
+                .get();
+    }
 
     public static void main(String[] args) {
         try(
@@ -52,19 +63,7 @@ public class FirstProblem {
         }
     }
 
-    public static Elf execute(String input){
-        return solve(input.lines());
-    }
-
-    public static Elf solve(Stream<String> lines){
-        return lines.reduce(
-                    initial(),
-                    FirstProblem::splitByEmptyLIne,
-                    (first, second) -> new ArrayList<>() // ignore because it's a merge function that'll never happen
-            )
-            .stream()
-            .map(FirstProblem::buildElfFromResource)
-            .max(comparingInt(Elf::calories))
-            .get();
+    public static Elf execute(Stream<String> input){
+        return solve(input);
     }
 }

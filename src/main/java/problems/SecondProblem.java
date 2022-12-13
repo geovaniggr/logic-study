@@ -86,8 +86,19 @@ public class SecondProblem {
         }
     }
 
-    public static void main(String[] args) {
+    public static Integer solve(Stream<String> lines){
+        return lines.map(line -> {
+                    var codded = line.split("\s+");
+                    return GameAction.from(codded[0], codded[1]);
+                })
+                .mapToInt(Tuple::points)
+                .sum();
+    }
 
+    public static Integer execute(Stream<String> input){
+        return solve(input);
+    }
+    public static void main(String[] args) {
         try (
                 var lines = lines(Path.of(PROBLEMS_FOLDER, "problem-number-2.txt").toAbsolutePath());
         ) {
@@ -99,18 +110,5 @@ public class SecondProblem {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static Integer execute(String input){
-        return solve(input.lines());
-    }
-
-    public static Integer solve(Stream<String> lines){
-      return lines.map(line -> {
-          var codded = line.split("\s+");
-          return GameAction.from(codded[0], codded[1]);
-      })
-      .mapToInt(Tuple::points)
-      .sum();
     }
 }
