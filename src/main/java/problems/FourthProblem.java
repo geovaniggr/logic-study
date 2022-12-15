@@ -26,7 +26,6 @@ public class FourthProblem {
                     .rangeClosed(section[0], section[1])
                     .boxed()
                     .collect(toSet());
-
         }
 
         private Boolean hasFullyOverlap(){
@@ -36,7 +35,7 @@ public class FourthProblem {
         }
     }
 
-    public static Integer count(Stream<String> lines){
+    public static Integer solve(Stream<String> lines){
 
         return Math.toIntExact(
                 lines
@@ -49,9 +48,8 @@ public class FourthProblem {
         );
     }
 
-
     public static void main(String[] args) {
-        var total = count(Stream.of(
+        var total = solve(Stream.of(
                 "2-4,6-8",
                 "2-3,4-5",
                 "5-7,7-9",

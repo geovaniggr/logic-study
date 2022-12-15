@@ -1,8 +1,8 @@
 package problems;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import utils.Solver;
 
 import java.util.stream.Stream;
 
@@ -10,9 +10,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class FirstProblemTest {
 
+    private final Solver solver = new Solver("inputs");
+
     @Test
     @DisplayName("Should count correctly")
-    void first_problem(){
+    void solve(){
         var elf = FirstProblem.execute(Stream.of(
     "1000",
             "2000",
@@ -33,4 +35,13 @@ class FirstProblemTest {
         assertThat(elf.calories()).isEqualTo(24_000);
         assertThat(elf.resources()).hasSize(3);
     }
+
+    @Test
+    @DisplayName("Should count correctly the input")
+    void solve_input(){
+        var elf = solver.forProblem("problem-1", FirstProblem::solve);
+        assertThat(elf.calories()).isEqualTo(68292);
+    }
+
+
 }
