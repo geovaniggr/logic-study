@@ -15,7 +15,7 @@ class FirstProblemTest {
     @Test
     @DisplayName("Should count correctly")
     void solve(){
-        var elf = FirstProblem.execute(Stream.of(
+        var elf = FirstProblem.getTopThreeElves(Stream.of(
     "1000",
             "2000",
             "3000",
@@ -31,9 +31,7 @@ class FirstProblemTest {
             "",
             "10000"
         ));
-
-        assertThat(elf.calories()).isEqualTo(24_000);
-        assertThat(elf.resources()).hasSize(3);
+        System.out.println(elf);
     }
 
     @Test
@@ -41,6 +39,14 @@ class FirstProblemTest {
     void solve_input(){
         var elf = solver.forProblem("problem-1", FirstProblem::solve);
         assertThat(elf.calories()).isEqualTo(68292);
+    }
+
+    @Test
+    @DisplayName("Should count correctly the top 3 elves")
+    void solve_input_part_2(){
+        var elves = solver.forProblem("problem-1", FirstProblem::getTopThreeElves);
+        var calories = elves.stream().mapToInt(FirstProblem.Elf::calories).sum();
+        assertThat(calories).isEqualTo(203_203);
     }
 
 

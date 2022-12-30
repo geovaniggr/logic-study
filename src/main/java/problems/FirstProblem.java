@@ -22,7 +22,7 @@ public class FirstProblem {
     }
 
     private static Elf buildElfFromResource(List<String> resource) {
-        var elements = resource.stream().mapToInt(str -> Integer.valueOf(str)).boxed().toList();
+        var elements = resource.stream().mapToInt(Integer::parseInt).boxed().toList();
         return new Elf(
                 elements,
                 elements.stream().reduce(0, Integer::sum)
@@ -41,16 +41,30 @@ public class FirstProblem {
 
         return accumulator;
     }
-    public static Elf solve(Stream<String> lines){
+
+    public static Stream<Elf> elves(Stream<String> lines){
         return lines.reduce(
                         initial(),
                         FirstProblem::splitByEmptyLIne,
                         (first, second) -> new ArrayList<>() // ignore because it's a merge function that'll never happen
                 )
                 .stream()
-                .map(FirstProblem::buildElfFromResource)
-                .max(comparingInt(Elf::calories))
-                .get();
+                .map(FirstProblem::buildElfFromResource);
+    }
+
+    public static Elf getMaximumElf(Stream<String> lines){
+        return elves(lines).max(comparingInt(Elf::calories)).get();
+    }
+
+    public static Elf solve(Stream<String> lines){
+        return getMaximumElf(lines);
+    }
+
+    public static List<Elf> getTopThreeElves(Stream<String> lines){
+        return elves(lines)
+                .sorted(comparingInt(Elf::calories).reversed())
+                .limit(3)
+                .toList();
     }
 
     public static void main(String[] args) {

@@ -10,14 +10,20 @@ public class SixthProblem {
     static final class Frame {
         private static int INITIAL_INDEX = 0;
         private final List<Character> frame;
+        private final Integer maximumFrameSize;
         private final HashSet<Character> validator = new HashSet<>();
 
-        Frame(List<Character> frame) {
+        Frame(List<Character> frame, Integer maximumFrameSize) {
+            this.maximumFrameSize = maximumFrameSize;
             this.frame = frame;
         }
 
         public Frame() {
-            this(new ArrayList<>(4));
+            this(new ArrayList<>(4), 4);
+        }
+
+        public Frame(Integer maximumFrameSize){
+            this(new ArrayList<>(maximumFrameSize), maximumFrameSize);
         }
 
         public void moveFrameToRight(char character) {
@@ -28,7 +34,7 @@ public class SixthProblem {
         }
 
         private boolean hasSpaceInFrame(){
-            return frame.size() < 4;
+            return frame.size() < maximumFrameSize;
         }
 
         private boolean hasEqualsCharactersInDataStream(){
@@ -57,8 +63,12 @@ public class SixthProblem {
     }
 
     public static List<Integer> solve(Stream<String> lines){
+        return solve(lines, 4);
+    }
+
+    public static List<Integer> solve(Stream<String> lines, Integer size){
         return lines.map( line -> {
-            var frame = new Frame();
+            var frame = new Frame(size);
             return frame.findIndexInDataStream(line.chars());
         })
         .toList();
@@ -66,11 +76,13 @@ public class SixthProblem {
 
     public static void main(String[] args) {
         var index = solve(Stream.of(
+                "mjqjpqmgbljsphdztnvjfqwrcgsmlb",
                 "bvwbjplbgvbhsrlpgdmjqwftvncz",
                 "nppdvjthqldpwncqszvftbrmjlhg",
                 "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg",
                 "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"
         ));
+
         System.out.println(index);
     }
 
